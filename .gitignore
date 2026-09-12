@@ -1,0 +1,15 @@
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+.vscode/
+
+processed_dataset/
+images/
+labels/
+
+*.h5
+*.keras
+*.pyc
