@@ -11,5 +11,5 @@ images/
 labels/
 
 *.h5
-*.keras
+
 *.pyc
