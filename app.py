@@ -1,3 +1,4 @@
+
 # ============================================================
 # AUTOMATED ROAD DAMAGE CLASSIFICATION
 # Feature-Rich Streamlit Application
@@ -11,7 +12,6 @@ import pandas as pd
 import streamlit as st
 import tensorflow as tf
 import matplotlib.pyplot as plt
-
 from PIL import Image
 from tensorflow.keras.models import Model
 
@@ -35,7 +35,6 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-
     .main {
         background-color: #f7f9fc;
     }
@@ -75,7 +74,6 @@ st.markdown(
         padding-top: 20px;
         border-top: 1px solid #dddddd;
     }
-
     </style>
     """,
     unsafe_allow_html=True
@@ -86,7 +84,8 @@ st.markdown(
 # 3. PROJECT CONFIGURATION
 # ============================================================
 
-PROJECT_DIR = r"C:\Users\Devendra\Automated Road Damage Classification"
+# Cloud-compatible project path
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 MODEL_PATH = os.path.join(
     PROJECT_DIR,
@@ -107,7 +106,6 @@ CLASS_NAMES = [
 # ============================================================
 
 DAMAGE_INFO = {
-
     "Crack": {
         "icon": "⚠️",
         "severity": "Moderate",
@@ -327,6 +325,7 @@ def generate_gradcam(
 
             return None
 
+
         # ----------------------------------------------------
         # Find last convolutional layer
         # ----------------------------------------------------
@@ -345,6 +344,7 @@ def generate_gradcam(
 
             return None
 
+
         # ----------------------------------------------------
         # Build a model that outputs:
         #
@@ -360,6 +360,7 @@ def generate_gradcam(
             ]
         )
 
+
         # ----------------------------------------------------
         # Forward pass
         # ----------------------------------------------------
@@ -371,6 +372,7 @@ def generate_gradcam(
                     image_array
                 )
             )
+
 
             # ------------------------------------------------
             # IMPORTANT:
@@ -399,6 +401,7 @@ def generate_gradcam(
                 predicted_index
             ]
 
+
         # ----------------------------------------------------
         # Calculate gradients
         # ----------------------------------------------------
@@ -416,6 +419,7 @@ def generate_gradcam(
 
             return None
 
+
         # ----------------------------------------------------
         # Global average pooling
         # ----------------------------------------------------
@@ -430,6 +434,7 @@ def generate_gradcam(
         )
 
         conv_outputs = conv_outputs[0]
+
 
         # ----------------------------------------------------
         # Weight feature maps
@@ -447,6 +452,7 @@ def generate_gradcam(
             heatmap
         )
 
+
         # ----------------------------------------------------
         # ReLU
         # ----------------------------------------------------
@@ -455,6 +461,7 @@ def generate_gradcam(
             heatmap,
             0
         )
+
 
         # ----------------------------------------------------
         # Normalize
@@ -474,6 +481,7 @@ def generate_gradcam(
             )
 
         heatmap = heatmap.numpy()
+
 
         # ----------------------------------------------------
         # Resize heatmap
@@ -499,6 +507,7 @@ def generate_gradcam(
         )
 
         return heatmap
+
 
     except Exception as e:
 
@@ -531,6 +540,7 @@ def create_gradcam_overlay(
         original_image
     )
 
+
     # --------------------------------------------------------
     # Jet heatmap
     # --------------------------------------------------------
@@ -554,6 +564,7 @@ def create_gradcam_overlay(
     original_image = Image.fromarray(
         original_array
     )
+
 
     # --------------------------------------------------------
     # Overlay
@@ -728,6 +739,7 @@ if uploaded_file is not None:
     ).convert(
         "RGB"
     )
+
 
     # --------------------------------------------------------
     # Prediction
@@ -1151,6 +1163,7 @@ if uploaded_file is not None:
                 "Manhole Probability",
 
                 "Pothole Probability"
+
             ],
 
             "Value": [
@@ -1170,6 +1183,7 @@ if uploaded_file is not None:
                 f"{probabilities[1] * 100:.2f}%",
 
                 f"{probabilities[2] * 100:.2f}%"
+
             ]
         }
     )
@@ -1180,9 +1194,13 @@ if uploaded_file is not None:
 
     st.download_button(
         label="📥 Download Prediction Report",
+
         data=report_csv,
+
         file_name="road_damage_prediction_report.csv",
+
         mime="text/csv",
+
         use_container_width=True
     )
 
@@ -1204,26 +1222,31 @@ if uploaded_file is not None:
     with p1:
 
         st.write("📤")
+
         st.write("Image Upload")
 
     with p2:
 
         st.write("🖼️")
+
         st.write("Preprocessing")
 
     with p3:
 
         st.write("🧠")
+
         st.write("MobileNetV2")
 
     with p4:
 
         st.write("🔍")
+
         st.write("Classification")
 
     with p5:
 
         st.write("🔥")
+
         st.write("Grad-CAM")
 
 
@@ -1373,3 +1396,4 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
